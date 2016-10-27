@@ -1,0 +1,136 @@
+<html>
+<head>  
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    
+    <!-- Material icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl" ng-cloak>     
+    
+    <div ng-show="!isDetailView" style="width: 500px; height: 500px; overflow-y: scroll;">
+        <div>
+            <md-button ng-click="showPrevDay()"><md-icon><i class="material-icons">keyboard_arrow_left</i></md-icon></md-button>
+            <md-datepicker ng-model="selectedDate" md-placeholder=""></md-datepicker>
+            <md-button ng-click="showNextDay()"><md-icon><i class="material-icons">keyboard_arrow_right</i></md-icon></md-button>
+        </div>
+
+        <md-list class="md-dense" style="overflow: auto;">
+            <md-list-item ng-repeat="game in games" ng-click="showDetails(game)">
+                <table cellpadding="5"><tr><td>
+                <table>
+                    <tr>
+                        <td style="width:350px" >
+                            <div ng-show="game.winner !== 'Home'">{{ game.homeTeam }}</div>
+                            <div ng-show="game.winner === 'Home'"><b>{{ game.homeTeam }}</b></div>
+                        </td>
+                        <td align="center">
+                            <div ng-show="game.winner !== 'Home'">{{ game.homeScore }}</div>
+                            <div ng-show="game.winner === 'Home'"><b>{{ game.homeScore }}</b></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div ng-show="game.winner !== 'Away'">{{ game.awayTeam }}</div>
+                            <div ng-show="game.winner === 'Away'"><b>{{ game.awayTeam }}</b></div>
+                        </td>
+                        <td align="center">
+                            <div ng-show="game.winner !== 'Away'">{{ game.awayScore }}</div>
+                            <div ng-show="game.winner === 'Away'"><b>{{ game.awayScore }}</b></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ game.status }}</td>
+                    </tr>                    
+                </table>   
+                </td></tr></table>           
+            </md-list-item>
+        </md-list>
+        <md-input-container>
+          <label>Favourite</label>
+          <md-select ng-model="favourite">            
+            <md-option ng-repeat="team in teams" ng-value="team">
+              {{team}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+    </div>
+
+    <div ng-show="isDetailView">
+        <md-button ng-click="showList()"><md-icon><i class="material-icons">home</i></md-icon>Back to Games</md-button>
+
+        <table>
+            <tr>
+                <th align="left"></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>R</th><th>H</th><th>E</th>
+            </tr>
+            <tr>
+                <td>{{ homeTeamCode }}</td>
+                <td>{{ scores[0].home }}</td>
+                <td>{{ scores[1].home }}</td>
+                <td>{{ scores[2].home }}</td>
+                <td>{{ scores[3].home }}</td>
+                <td>{{ scores[4].home }}</td>
+                <td>{{ scores[5].home }}</td>
+                <td>{{ scores[6].home }}</td>
+                <td>{{ scores[7].home }}</td>
+                <td>{{ scores[8].home }}</td>
+                <td>{{ homeTeamRuns }}</td>
+                <td>{{ homeTeamHits }}</td>
+                <td>{{ homeTeamErrors }}</td>
+            </tr>
+            <tr>
+                <td>{{ awayTeamCode }}</td>
+                <td>{{ scores[0].away }}</td>
+                <td>{{ scores[1].away }}</td>
+                <td>{{ scores[2].away }}</td>
+                <td>{{ scores[3].away }}</td>
+                <td>{{ scores[4].away }}</td>
+                <td>{{ scores[5].away }}</td>
+                <td>{{ scores[6].away }}</td>
+                <td>{{ scores[7].away }}</td>
+                <td>{{ scores[8].away }}</td>
+                <td>{{ awayTeamRuns }}</td>
+                <td>{{ awayTeamHits }}</td>
+                <td>{{ awayTeamErrors }}</td>
+            </tr>
+        </table>
+        <br/>
+        <div>
+            <a href="" ng-click="showBatters(0)">{{homeTeam}}</a>
+            |
+            <a href="" ng-click="showBatters(1)">{{awayTeam}}</a>            
+        </div>
+        <br/>
+        <table>
+            <tr>
+                <th align="left">Name</th><th>AB</th><th>R</th><th>H</th><th>RBI</th><th>BB</th><th>SO</th><th>AVG</th>
+            </tr>
+            <tr ng-repeat="batter in batters">
+                <td>{{ batter.name }}</td>
+                <td align="center">{{ batter.ab }}</td>
+                <td align="center">{{ batter.r }}</td>
+                <td align="center">{{ batter.h }}</td>
+                <td align="center">{{ batter.rbi }}</td>
+                <td align="center">{{ batter.bb }}</td>
+                <td align="center"d>{{ batter.so }}</td>
+                <td align="center">{{ batter.avg }}</td>
+            </tr>
+        </table            
+    </div>
+
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    
+    <!-- Application bootstrap -->
+    <script src="angular.js"></script> 
+
+</body>
+</html>
